@@ -6,16 +6,27 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.3",
+    "autoprefixer": "^9.8.6",
+    "formik": "^2.2.6",
+    "multiselect-react-dropdown": "^1.6.11",
+    "postcss": "^8.2.6",
+    "postcss-cli": "^8.3.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.0"
+    "tailwindcss": "^2.0.3",
+    "web-vitals": "^1.1.0",
+    "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run build:watch && react-scripts start",
+    "build": "npm run build:css && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:css": "postcss src/style/tailwind.css -o src/style/main.css",
+    "build:watch": "postcss src/style/tailwind.css -o src/style/main.css"
   },
   "eslintConfig": {
     "extends": [
