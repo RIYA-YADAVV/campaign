@@ -6,8 +6,39 @@ import { FiPercent  } from 'react-icons/fi';
 import * as Yup from 'yup'
 import TextError from './TextError'
 import { useHistory } from "react-router-dom";
+import ReactSlider from 'react-slider';
+import styled from 'styled-components';
 
 var data=[];
+
+const StyledSlider = styled(ReactSlider)`
+    height: 10px;
+`;
+
+const StyledThumb = styled.div`
+    height: 20px;
+    line-height: 75px;
+    outline: none;
+    width: 20px;
+    text-align: center;
+    background-color: rgb(30, 58, 138);
+    color: rgb(30, 58, 138);
+    border-radius: 50%;
+    cursor: grab;
+    margin-top:-4px;
+    font-size:12px;
+`;
+
+const Thumb = (props, state) => <StyledThumb {...props}>{state.valueNow}</StyledThumb>;
+
+const StyledTrack = styled.div`
+    top: 0;
+    bottom: 0;
+    background: ${props => props.index === 2 ? '#ddd' : props.index === 1 ? 'rgba(239, 68, 68,0.7)' : '#ddd'};
+    
+`;
+
+const Track = (props, state) => <StyledTrack {...props} index={state.index} />;
 
 function CForm() {
 
@@ -41,6 +72,7 @@ function CForm() {
           }
           
     }
+
 
     const history = useHistory();
     const multiselectRef1 = React.createRef();
@@ -170,12 +202,23 @@ function CForm() {
                         
                     </div>
 
-                    <div className="mb-5">
+                    <div className="mb-12">
                         <label htmlFor="followers">No. of followers</label><br/>
                         <div className="text-mb mt-3 mb-1 max-w-96 md:w-96  py-2">
+                        <StyledSlider
+                            defaultValue={[0,10000]}
+                            renderTrack={Track}
+                            renderThumb={Thumb}
+                            min="0"
+                            max="100000"
+                            minDistance="1000"
+                        />
+                        </div>
+
+                        {/* <div className="text-mb mt-3 mb-1 max-w-96 md:w-96  py-2">
                             <input id="followers" name="followers" className="w-full outline-none" type="range"  min="0" max="10000" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.followers}/> 
                             <div className="border-blue-200 border-2 w-min bg-blue-50 py-1 px-3 mt-3">{formik.values.followers}</div>
-                        </div>
+                        </div> */}
                         <ErrorMessage component={TextError} name='followers' /> 
                         
                     </div>
