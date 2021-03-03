@@ -8,11 +8,12 @@ import TextError from './TextError'
 import { useHistory } from "react-router-dom";
 import ReactSlider from 'react-slider';
 import styled from 'styled-components';
-
+import {dropdown,locationData,responseData,brandData,categoryData} from './styling'
 var data=[];
 
 const StyledSlider = styled(ReactSlider)`
     height: 10px;
+    z-index:1;
 `;
 
 const StyledThumb = styled.div`
@@ -27,6 +28,7 @@ const StyledThumb = styled.div`
     cursor: grab;
     margin-top:-4px;
     font-size:12px;
+    z-index:-1
 `;
 
 const Thumb = (props, state) => <StyledThumb {...props}>{state.valueNow}</StyledThumb>;
@@ -42,74 +44,11 @@ const Track = (props, state) => <StyledTrack {...props} index={state.index} />;
 
 function CForm() {
 
-    const dropdown={
-        chips: { 
-            background: "rgb(239, 246, 255)",
-            color:"rgb(30, 58, 138)" ,
-            borderWidth:"2px ",
-            borderColor:"rgb(191, 219, 254)",
-            borderRadius:0,
-            margin:"4px",
-
-        }, 
-        searchBox: { 
-            border: "none",
-            outline:"none" ,
-        },
-        optionContainer: {
-            background: "rgb(239, 246, 255)",
-            color:"rgb(30, 58, 138)" ,
-            borderWidth:"2px ",
-            borderColor:"rgb(191, 219, 254)",
-            borderRadius:0,
-            '&:hover':{
-                background: 'rgb(30, 58, 138)'
-              }
-          },
-          option: { 
-            background: "rgb(239, 246, 255)",
-            color:"rgb(30, 58, 138)" ,
-          }
-          
-    }
-
-
     const history = useHistory();
     const multiselectRef1 = React.createRef();
     const multiselectRef2 = React.createRef();
     const multiselectRef3 = React.createRef();
     const multiselectRef4 = React.createRef();
-
-    const locationData=[
-        {Location:'Delhi', id:1},
-        {Location:'Gurugram', id:2},
-        {Location:'Mumbai', id:3},
-        {Location:'Chennai', id:4},
-        {Location:'Bangalore', id:5}
-    ]
-
-    const categoryData=[
-        {Category:'Food', id:1},
-        {Category:'Art', id:2},
-        {Category:'Fashion', id:3},
-        {Category:'Media', id:4},
-        {Category:'Tv', id:5}
-    ]
-
-    const brandData=[
-        {Brand:'Free', id:1},
-        {Brand:'Free Food', id:2},
-        {Brand:'Free Shoes', id:3},
-        {Brand:'Free Earphones', id:4},
-        {Brand:'Free Clothes', id:5}
-    ]
-
-    const responseData=[
-        {Time:'<1 Day', id:1},
-        {Time:'1-2 Days', id:2},
-        {Time:'1 Week', id:3},
-        {Time:'More than a week', id:4}
-    ]
 
     const [options4]=useState(responseData);
     const [options3]=useState(brandData);
@@ -121,7 +60,7 @@ function CForm() {
         description:'',
         location:'',
         category:'',
-        followers:0,
+        followers:'',
         responsetime:'',
         budgetMin:'',
         budgetMax:'',
@@ -186,8 +125,8 @@ function CForm() {
                     
                     <div className="mb-5">
                         <label htmlFor="location">Target location of your campaign</label><br/>
-                        <div className="min-h-12 mt-3 mb-1 max-w-96 md:w-96   rounded-md border-blue-200 border-2 ">
-                            <Multiselect name="location" id="location" placeholder="" style={dropdown} closeIcon="cancel" ref={multiselectRef1}  showArrow="true" options={options} displayValue="Location" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.location} onSelect={(selectedItem)=>{formik.values.location=selectedItem}} />
+                        <div className="min-h-12 mt-3 mb-1 max-w-96 md:w-96  pl-2 rounded-md border-blue-200 border-2 ">
+                            <Multiselect name="location" id="location" placeholder="Select" style={dropdown} closeIcon="cancel" ref={multiselectRef1}  showArrow="true" options={options} displayValue="Location" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.location} onSelect={(selectedItem)=>{formik.values.location=selectedItem}} />
                         </div>
                         <ErrorMessage component={TextError} name='location' /> 
                         
@@ -195,16 +134,16 @@ function CForm() {
 
                     <div className="mb-5">
                         <label htmlFor="category">Category(s) for your campaign</label><br/>
-                        <div className="min-h-12 mt-3 mb-1 max-w-96 md:w-96  rounded-md border-blue-200 border-2 ">
-                            <Multiselect id="category" name="category" placeholder="" options={options2} style={dropdown} showArrow="true" ref={multiselectRef2}  closeIcon="cancel"  displayValue="Category" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.category} onSelect={(selectedItem)=>{formik.values.category=selectedItem}} />
+                        <div className="min-h-12 mt-3 mb-1 max-w-96 md:w-96 pl-2 rounded-md border-blue-200 border-2 ">
+                            <Multiselect id="category" name="category" placeholder="Select" options={options2} style={dropdown} showArrow="true" ref={multiselectRef2}  closeIcon="cancel"  displayValue="Category" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.category} onSelect={(selectedItem)=>{formik.values.category=selectedItem}} />
                         </div>
                         <ErrorMessage component={TextError} name='category' /> 
                         
                     </div>
 
-                    <div className="mb-12">
+                    <div className="mb-10">
                         <label htmlFor="followers">No. of followers</label><br/>
-                        <div className="text-mb mt-3 mb-1 max-w-96 md:w-96  py-2">
+                        <div className="text-mb mt-3 mb-6 max-w-96 md:w-96  py-2">
                         <StyledSlider
                             defaultValue={[0,10000]}
                             renderTrack={Track}
@@ -212,21 +151,17 @@ function CForm() {
                             min="0"
                             max="100000"
                             minDistance="1000"
+                            onChange={val=>formik.values.followers=val}
                         />
                         </div>
-
-                        {/* <div className="text-mb mt-3 mb-1 max-w-96 md:w-96  py-2">
-                            <input id="followers" name="followers" className="w-full outline-none" type="range"  min="0" max="10000" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.followers}/> 
-                            <div className="border-blue-200 border-2 w-min bg-blue-50 py-1 px-3 mt-3">{formik.values.followers}</div>
-                        </div> */}
                         <ErrorMessage component={TextError} name='followers' /> 
                         
                     </div>
 
                     <div className="mb-5">
                         <label htmlFor="responsetime">Average response time of the infuencers</label><br/>
-                        <div className="h-12 mt-3 mb-1 max-w-96 md:w-96  rounded-md border-blue-200 border-2 ">
-                            <Multiselect  id="responsetime" name="responsetime" placeholder="" style={dropdown}  className="outline-none border-none" ref={multiselectRef3}  closeIcon="cancel" singleSelect="true" showArrow="true" options={options4} displayValue="Time" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.responsetime} onSelect={(selectedItem)=>{formik.values.responsetime=selectedItem}}/>  
+                        <div className="h-12 mt-3 mb-1 max-w-96 md:w-96 pl-2 rounded-md border-blue-200 border-2 ">
+                            <Multiselect  id="responsetime" name="responsetime" placeholder="Select" style={dropdown}  className="outline-none border-none" ref={multiselectRef3}  closeIcon="cancel" singleSelect="true" showArrow="true" options={options4} displayValue="Time" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.responsetime} onSelect={(selectedItem)=>{formik.values.responsetime=selectedItem}}/>  
                         </div> 
                         <ErrorMessage component={TextError} name='responsetime' /> 
                     </div>
@@ -262,8 +197,8 @@ function CForm() {
 
                     <div className="mb-5">
                         <label htmlFor="brandCollab">Kind of brand collab</label><br/>
-                        <div className="min-h-12 mt-3 mb-1 max-w-96  rounded-md border-blue-200 border-2 md:w-96 ">
-                            <Multiselect id="brandCollab" name="brandCollab" placeholder="" style={dropdown} options={options3} ref={multiselectRef4}  closeIcon="cancel"  displayValue="Brand" showArrow="true" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.brandCollab } onSelect={(selectedItem)=>{formik.values.brandCollab=selectedItem}}  />
+                        <div className="min-h-12 mt-3 mb-1 max-w-96  rounded-md border-blue-200 border-2 md:w-96 pl-2">
+                            <Multiselect id="brandCollab" name="brandCollab"  placeholder="Select" style={dropdown} options={options3} ref={multiselectRef4}  closeIcon="cancel"  displayValue="Brand" showArrow="true" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.brandCollab } onSelect={(selectedItem)=>{formik.values.brandCollab=selectedItem}}  />
                         </div>
                         <ErrorMessage component={TextError} name='brandCollab' />   
                     </div>

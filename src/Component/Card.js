@@ -12,7 +12,7 @@ const Box=(props)=>{
 
 function Card(props) {
     return (
-        <div className="min-h-96 w-auto md:w-96 mb-20 rounded-md mr-0 md:mr-20 p-8 text-blue-900 bg-white">
+        <div className="min-h-96 w-auto md:w-96 mb-20 rounded-md mr-0 md:mr-8 p-8 text-blue-900 bg-white">
             <h1 className="text-lg font-extrabold ">{props.name}</h1>
             <p className="h-16 overflow-clip overflow-hidden  text-sm py-2 pr-2 text-gray-300">{props.description}</p>
             <div className="flex flex-col-reverse md:flex-row justify-between pt-4 text-sm" >
@@ -27,7 +27,7 @@ function Card(props) {
                     </div>
                     <div className="flex flex-row  md:hidden ">
                         <BiRupee className=" text-red-400 text-lg"/>
-                        <h3 className="mx-1">{props.budgetMin}-{props.budgetMax}</h3>   
+                        <h3 className="mx-3">{props.budgetMin}-{props.budgetMax}</h3>   
                     </div>
                     
                 </div>
