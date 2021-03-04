@@ -52,11 +52,11 @@ const brandData=[
 ]
 
 const followersData=[
-    {Followers:'5K', id:1},
-    {Followers:'10K', id:2},
-    {Followers:'20K', id:3},
-    {Followers:'50K', id:4},
-    {Followers:'1 Lakh', id:5}
+    {Followers:5000, id:1},
+    {Followers:10000, id:2},
+    {Followers:20000, id:3},
+    {Followers:50000, id:4},
+    {Followers:100000, id:5}
 ]
 
 const responseData=[
